@@ -1,0 +1,23 @@
+{
+  "name": "perfectum-api",
+  "version": "1.0.0",
+  "description": "A goal tracking REST API with sub-goals, built with Node.js, Express, and MongoDB.",
+  "homepage": "https://github.com/ChasingPrograms/Perfectum-API#readme",
+  "bugs": {
+    "url": "https://github.com/ChasingPrograms/Perfectum-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChasingPrograms/Perfectum-API.git"
+  },
+  "license": "ISC",
+  "author": "ChasingPrograms",
+  "type": "commonjs",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
