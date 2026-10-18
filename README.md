@@ -2,11 +2,11 @@
 
 A goal tracking REST API with sub-goals, built with Node.js, Express, and MongoDB.
 
-> **Status:** In development (Version 1). !!
+> **Status:** In development (Version 1).
 
 Perfectum lets a user create goals, break them into sub-goals, check them off, and archive goals they want to pause or keep as history. It is a single-user project built as a portfolio piece.
 
-*Perfectum is an independent personal project and is not affiliated with any other product of the same name.* !!
+*Perfectum is an independent personal project and is not affiliated with any other product of the same name.*
 
 ---
 
