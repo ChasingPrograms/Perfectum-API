@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment files (real secrets). Do not ignore .env.example.
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
