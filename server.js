@@ -14,15 +14,34 @@ app.get('/', async (req, res) => {
 
 //Post Method
 app.post('/goals',async (req, res) => {
-  const goal = await Goal.create({title: req.body.title});
-  res.status(201).json(goal);
+
+  try{
+    const goal = await Goal.create({title: req.body.title});
+    res.status(201).json(goal);
+  }
+
+  catch(err){
+    if(err.name === 'ValidationError'){
+      return res.status(400).json({error: 'Invalid title input'});
+    }
+    res.status(500).json({error: 'Server Error'});
+  }
+  
 });
 
 //Get Method 
 app.get('/goals', async (req, res) => {
-  const archived = req.query.archived === 'true';
-  const goals = await Goal.find({archived});
-  res.status(200).json(goals);
+
+  try{
+    const archived = req.query.archived === 'true';
+    const goals = await Goal.find({archived});
+    res.status(200).json(goals);
+  }
+
+  catch(err){
+     res.status(500).json({error: 'Server Error'});
+  }
+  
 });
 
 app.get('/goals/:goalId', async (req, res) => {
@@ -46,7 +65,109 @@ app.get('/goals/:goalId', async (req, res) => {
   }
 });
 
+//Patch Method
+app.patch('/goals/:goalId', async (req, res) => { //Updating Goal Titles
+  try{
+    const goal = await Goal.findById(req.params.goalId);
+    const title = req.body.title;
 
+    if(!goal){ //If there's no such goal
+      return res.status(404).json({error: 'Goal Not Found'});
+    }
+
+    goal.title = title;
+    await goal.save();
+    res.status(200).json(goal);
+  }
+
+  catch(err){
+    if(err.name === 'CastError'){
+      return res.status(400).json({error: 'Invalid goal ID'});
+    }
+
+    if(err.name === 'ValidationError'){
+      return res.status(400).json({error: 'Invalid title input'});
+    }
+
+     res.status(500).json({error: 'Server Error'});
+  }
+});
+
+//Goal Delete Method
+app.delete('/goals/:goalId', async (req, res) => {
+  try{
+    const goal = await Goal.findById(req.params.goalId);
+
+     if(!goal){ //If there's no such goal
+      return res.status(404).json({error: 'Goal Not Found'});
+    }
+    await goal.deleteOne();
+     res.status(204).send();
+  }
+
+  catch(err){
+    if(err.name === 'CastError'){
+      return res.status(400).json({error: 'Invalid goal ID'});
+    }
+
+    res.status(500).json({error: 'Server Error'});
+  }
+})
+
+
+// Archiving
+app.patch('/goals/:goalId/archive', async (req, res) => { //Archiving Active Goals
+  try{
+    const goal = await Goal.findById(req.params.goalId);
+
+    if(!goal){ //If there's no such goal
+      return res.status(404).json({error: 'Goal Not Found'});
+    }
+
+    if(goal.archived){
+      return res.status(409).json({error: 'Goal is Already Archived'})
+    }
+
+    goal.archived = true;
+    await goal.save();
+    res.status(200).json(goal);
+  }
+
+  catch(err){
+    if(err.name === 'CastError'){
+      return res.status(400).json({error: 'Invalid goal ID'});
+    }
+
+     res.status(500).json({error: 'Server Error'});
+  }
+});
+
+
+app.patch('/goals/:goalId/unarchive', async (req, res) => { //Unarchiving Inactive Goals
+  try{
+    const goal = await Goal.findById(req.params.goalId);
+
+    if(!goal){ //If there's no such goal
+      return res.status(404).json({error: 'Goal Not Found'});
+    }
+
+    if(!goal.archived){
+      return res.status(409).json({error: 'Goal is Already Active'})
+    }
+
+    goal.archived = false;
+    await goal.save();
+    res.status(200).json(goal);
+  }
+
+  catch(err){
+    if(err.name === 'CastError'){
+      return res.status(400).json({error: 'Invalid goal ID'});
+    }
+    
+     res.status(500).json({error: 'Server Error'});
+  }
+});
 
 
 const PORT = process.env.PORT || 3000;

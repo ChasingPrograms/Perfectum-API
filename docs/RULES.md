@@ -94,8 +94,10 @@ Decisions that define how the API behaves.
   - A goal can have at most a fixed number of sub-goals. The limit is set in one place so it can be changed without editing the rest of the code. Requests to add more are refused with an error.
     - ***Why:*** A very long list of sub-goals is hard to use and is usually several goals combined.
 
-
 #### ***Limits Rule 2***
   - The creation date is set automatically when a goal or sub-goal is created and cannot be changed by the user.
     - ***Why:*** A date the user could edit would not be a reliable record.
     
+#### ***Limits Rule 3***
+  - An action that would change nothing, such as archiving a goal that is already archived, is refused with an error saying the item is already in that state.
+    - ***Why:*** A repeated request usually means the client is out of sync, and a clear error tells it so instead of hiding the problem.
