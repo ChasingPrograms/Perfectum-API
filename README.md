@@ -42,7 +42,7 @@ See [docs/SCOPE.md](docs/SCOPE.md) for what is in Version 1, what might come nex
 
 ### Setup:
 ```bash
-git clone https://github.com/ChasingProgramsPerfectum-API.git
+git clone https://github.com/ChasingPrograms/Perfectum-API.git
 cd Perfectum-API
 npm install
 ```
