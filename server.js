@@ -3,10 +3,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Goal = require('./models/Goal');
 
+
+
 const app = express();
 app.use(express.json());
 
 
+//Progress Function
+const getProgress = (goal) => {
+  const total = goal.subGoals.length;
+  const count = goal.subGoals.filter(sub => sub.completed).length;
+  return{completed: count,total}
+};
 
 app.get('/', async (req, res) => {
   res.json({ message: 'Perfectum API is running' });
@@ -38,7 +46,7 @@ app.get('/goals', async (req, res) => {
   try{
     const archived = req.query.archived === 'true';
     const goals = await Goal.find({archived});
-    res.status(200).json(goals);
+    res.status(200).json(goals.map(goal => ({ ...goal.toObject(), progress: getProgress(goal) })));
   }
 
   catch(err){
@@ -56,7 +64,7 @@ app.get('/goals/:goalId', async (req, res) => {
       return res.status(404).json({error: 'Goal Not Found'});
     }
 
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -80,7 +88,7 @@ app.patch('/goals/:goalId', async (req, res) => { //Updating Goal Titles
 
     goal.title = title;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -147,7 +155,7 @@ app.post('/goals/:goalId/subgoals', async (req, res) => {
 
     goal.subGoals.push({title: req.body.title});
     await goal.save();
-    res.status(201).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -174,7 +182,7 @@ app.patch('/goals/:goalId/subgoals/:subGoalId', async (req, res) => { //Updating
     }
 
     if(goal.archived){
-       return res.status(409).json({error: 'Archived Goal Can\'t be Edited'});
+       return res.status(409).json({error: 'Can\'t be Edited'});
     }
 
     const sub = goal.subGoals.id(req.params.subGoalId);
@@ -184,7 +192,7 @@ app.patch('/goals/:goalId/subgoals/:subGoalId', async (req, res) => { //Updating
 
    sub.title = title;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -194,6 +202,37 @@ app.patch('/goals/:goalId/subgoals/:subGoalId', async (req, res) => { //Updating
 
     if(err.name === 'ValidationError'){
       return res.status(400).json({error: 'Invalid title input'});
+    }
+
+     res.status(500).json({error: 'Server Error'});
+  }
+});
+
+app.delete('/goals/:goalId/subgoals/:subGoalId', async (req, res) => { //Deleting Sub-Goal
+  try{
+    const goal = await Goal.findById(req.params.goalId);
+
+    if(!goal){ //If there's no such goal
+      return res.status(404).json({error: 'Goal Not Found'});
+    }
+
+    if(goal.archived){
+       return res.status(409).json({error: 'Can\'t be Edited'});
+    }
+
+    const sub = goal.subGoals.id(req.params.subGoalId);
+    if(!sub){ //If there's no sub goal
+      return res.status(404).json({error: 'Sub-Goal Not Found'});
+    }
+
+    await sub.deleteOne();
+    await goal.save();
+    res.status(204).send();
+  }
+
+  catch(err){
+    if(err.name === 'CastError'){
+      return res.status(400).json({error: 'Invalid ID'});
     }
 
      res.status(500).json({error: 'Server Error'});
@@ -219,7 +258,7 @@ app.patch('/goals/:goalId/archive', async (req, res) => { //Archiving Active Goa
 
     goal.archived = true;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -246,7 +285,7 @@ app.patch('/goals/:goalId/unarchive', async (req, res) => { //Unarchiving Inacti
 
     goal.archived = false;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -282,7 +321,7 @@ app.patch('/goals/:goalId/complete', async (req, res) => { //Completing Goals
     goal.completedAt = new Date();
     goal.completed = true;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -315,7 +354,7 @@ app.patch('/goals/:goalId/uncomplete', async (req, res) => { //Uncompleting Goal
     goal.completedAt = null;
     goal.completed = false;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -351,7 +390,7 @@ app.patch('/goals/:goalId/subgoals/:subGoalId/complete', async (req, res) => { /
 
     sub.completed = true;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
@@ -392,7 +431,7 @@ app.patch('/goals/:goalId/subgoals/:subGoalId/uncomplete', async (req, res) => {
 
     sub.completed = false;
     await goal.save();
-    res.status(200).json(goal);
+    res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
 
   catch(err){
