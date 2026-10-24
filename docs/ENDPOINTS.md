@@ -6,8 +6,8 @@ Every action the API offers. Behavior rules live in [RULES.md](RULES.md), field 
 
 - **Format:** requests and responses are JSON.
 - **Goal IDs and sub-goal IDs** are the `_id` values from the data model. An ID that is not a valid ID is refused with `400`.
-- **Action routes:** completing, unmarking, archiving, and unarchiving each have their own route (for example `POST /goals/:goalId/complete`), not a field you edit. This keeps each rule's refusal message clear.
-- **Changing sub-goals returns the whole updated goal,** because a sub-goal change can also change the goal (Goals Rule 4, Sub-goals Rule 5).
+- **Action routes:** completing, unmarking, archiving, and unarchiving each have their own route (for example `PATCH /goals/:goalId/complete`), not a field you edit. This keeps each rule's refusal message clear.
+- **Changing sub-goals returns the whole updated goal,** because a sub-goal change can also change the goal (Goals Rule 4, Sub-goals Rule 5). Except deleting a sub-goal, which returns 204 with no body.
 - **Repeating an action is refused.** An action that would change nothing, such as archiving a goal that is already archived, is refused with `409` and a message saying the item is already in that state.
 
 ### Status codes
@@ -16,7 +16,7 @@ Every action the API offers. Behavior rules live in [RULES.md](RULES.md), field 
 |---|---|
 | `200` | Success, with a response body |
 | `201` | Created |
-| `204` | Success, no body (deleting a goal) |
+| `204` | Success, no body (deleting a goal or a sub-goal) |
 | `400` | The request is malformed or breaks a validation rule (missing title, title too long, invalid ID) |
 | `404` | The goal or sub-goal does not exist |
 | `409` | The request is valid, but a rule refuses it in the goal's current state (Inactive goal, unfinished sub-goals, sub-goal limit reached, or the item is already in the state the action would put it in) |
@@ -64,7 +64,6 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 - `GET /goals` or `GET /goals?archived=true`
 - **Does:** Returns Active goals by default, or Inactive goals when `archived=true`. This gives you the Active list and the Archive list.
 - **Success:** `200` with a list of goals, including each goal's progress.
-- **Errors:** `400` if `archived` is anything other than `true` or `false`.
 - **Rules:** Archiving Rules 1 to 4.
 
 #### ***Get one goal***
@@ -93,7 +92,7 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 ## Completing and archiving a goal
 
 #### ***Mark a goal complete***
-- `POST /goals/:goalId/complete`
+- `PATCH /goals/:goalId/complete`
 - **Does:** Marks the goal complete and records `completedAt`.
 - **Success:** `200` with the updated goal.
 - **Errors:**
@@ -104,21 +103,21 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 - **Rules:** Goals Rules 1, 2, 3 and 6.
 
 #### ***Unmark a goal as complete***
-- `POST /goals/:goalId/uncomplete`
+- `PATCH /goals/:goalId/uncomplete`
 - **Does:** Marks the goal not complete and clears `completedAt`.
 - **Success:** `200` with the updated goal.
 - **Errors:** `409` if the goal is Inactive or is not complete, `404` if not found.
 - **Rules:** Goals Rules 3 and 6.
 
 #### ***Archive a goal***
-- `POST /goals/:goalId/archive`
+- `PATCH /goals/:goalId/archive`
 - **Does:** Moves the goal to Inactive, whether or not it is complete. Completion is not changed.
 - **Success:** `200` with the updated goal.
 - **Errors:** `409` if the goal is already Inactive, `404` if not found.
 - **Rules:** Archiving Rules 1 to 3.
 
 #### ***Unarchive a goal***
-- `POST /goals/:goalId/unarchive`
+- `PATCH /goals/:goalId/unarchive`
 - **Does:** Moves the goal back to Active. Completion is not changed.
 - **Success:** `200` with the updated goal.
 - **Errors:** `409` if the goal is already Active, `404` if not found.
@@ -149,19 +148,19 @@ Sub-goals are stored inside their goal, so every sub-goal route includes the goa
 #### ***Delete a sub-goal***
 - `DELETE /goals/:goalId/subgoals/:subGoalId`
 - **Does:** Removes the sub-goal. The goal's completed state does not change, and if it was the last sub-goal, the goal then counts as one item.
-- **Success:** `200` with the updated goal.
+- **Success:** `204`.
 - **Errors:** `409` if the goal is Inactive. `404` if the goal or sub-goal is not found.
 - **Rules:** Sub-goals Rules 2, 4 and 6.
 
-#### ***Check a sub-goal***
-- `POST /goals/:goalId/subgoals/:subGoalId/check`
+#### ***Mark a sub-goal as complete***
+- `PATCH /goals/:goalId/subgoals/:subGoalId/complete`
 - **Does:** Marks the sub-goal done. It does not complete the goal, because completing a goal is always a separate action.
 - **Success:** `200` with the updated goal.
 - **Errors:** `409` if the goal is Inactive or the sub-goal is already done. `404` if the goal or sub-goal is not found.
 - **Rules:** Sub-goals Rules 2 and 3.
 
-#### ***Uncheck a sub-goal***
-- `POST /goals/:goalId/subgoals/:subGoalId/uncheck`
+#### ***Mark a sub-goal as uncomplete***
+- `PATCH /goals/:goalId/subgoals/:subGoalId/uncomplete`
 - **Does:** Marks the sub-goal not done. If the goal was complete, it is automatically unmarked and its `completedAt` is cleared.
 - **Success:** `200` with the updated goal.
 - **Errors:** `409` if the goal is Inactive or the sub-goal is not done. `404` if the goal or sub-goal is not found.
@@ -178,15 +177,15 @@ Sub-goals are stored inside their goal, so every sub-goal route includes the goa
 | `GET` | `/goals/:goalId` | Get one goal |
 | `PATCH` | `/goals/:goalId` | Rename or edit a goal |
 | `DELETE` | `/goals/:goalId` | Delete a goal and its sub-goals |
-| `POST` | `/goals/:goalId/complete` | Mark a goal complete |
-| `POST` | `/goals/:goalId/uncomplete` | Unmark a goal as complete |
-| `POST` | `/goals/:goalId/archive` | Archive a goal |
-| `POST` | `/goals/:goalId/unarchive` | Unarchive a goal |
+| `PATCH` | `/goals/:goalId/complete` | Mark a goal complete |
+| `PATCH` | `/goals/:goalId/uncomplete` | Unmark a goal as complete |
+| `PATCH` | `/goals/:goalId/archive` | Archive a goal |
+| `PATCH` | `/goals/:goalId/unarchive` | Unarchive a goal |
 | `POST` | `/goals/:goalId/subgoals` | Add a sub-goal |
 | `PATCH` | `/goals/:goalId/subgoals/:subGoalId` | Edit a sub-goal |
 | `DELETE` | `/goals/:goalId/subgoals/:subGoalId` | Delete a sub-goal |
-| `POST` | `/goals/:goalId/subgoals/:subGoalId/check` | Check a sub-goal |
-| `POST` | `/goals/:goalId/subgoals/:subGoalId/uncheck` | Uncheck a sub-goal |
+| `PATCH` | `/goals/:goalId/subgoals/:subGoalId/complete` | Mark a sub-goal as complete |
+| `PATCH` | `/goals/:goalId/subgoals/:subGoalId/uncomplete` | Mark a sub-goal as uncomplete |
 
 That is 14 endpoints, covering every item in Version 1.
 
@@ -196,6 +195,4 @@ That is 14 endpoints, covering every item in Version 1.
 
 - No sorting or filtering of goal lists beyond `archived` (Nice to have in SCOPE.md).
 - No deadline fields or deadline routes.
-- No login or user routes, since Perfectum is single-user.# Perfectum: Endpoints
-
-Every action the API offers. Behavior rules live in [RULES.md](RULES.md), field names in [DATA_MODEL.md](DATA_MODEL.md), and what is in Version 1 in [SCOPE.md](SCOPE.md).
+- No login or user routes, since Perfectum is single-user.
