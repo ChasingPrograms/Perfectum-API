@@ -8,6 +8,7 @@ const subGoalSchema = new mongoose.Schema({
 
 const goalSchema= new mongoose.Schema({
     title: { type: String, required: true, trim: true, maxlength: 100 },
+    description: { type: String, trim: true, maxlength: 500, default: '' },
     completed: { type: Boolean, default: false },
     completedAt: { type: Date, default: null },
     subGoals: {type: [subGoalSchema], default: []},
