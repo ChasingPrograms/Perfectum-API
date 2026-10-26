@@ -55,11 +55,11 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 
 #### ***Create a goal***
 - `POST /goals`
-- **Body:** `{ "title": "Get fit by December", "description": "Feel stronger and have more energy" }`. `description` is optional.
-- **Does:** Creates an Active, incomplete goal with no sub-goals. Dates are set automatically. Without a description, `description` is an empty string.
+- **Body:** `{ "title": "Get fit by December", "description": "Feel stronger and have more energy", "subGoals": ["Gym 3x a week", "Meal prep on Sundays"] }`. `description` and `subGoals` are optional. `subGoals` is a list of sub-goal titles.
+- **Does:** Creates an Active, incomplete goal, with any sub-goals given (all unfinished). Dates are set automatically. Without a description, `description` is an empty string. The goal and its sub-goals are saved together: if anything is invalid, nothing is created.
 - **Success:** `201` with the new goal.
-- **Errors:** `400` if the title is missing, empty, or longer than 100 characters, or the description is longer than 500 characters.
-- **Rules:** Goals Rules 8 and 10, Limits Rule 2.
+- **Errors:** `400` if the title is missing, empty, or longer than 100 characters, the description is longer than 500 characters, `subGoals` is not a list, it has more than 20 titles, or any sub-goal title is missing, empty, or longer than 100 characters.
+- **Rules:** Goals Rules 8 and 10, Sub-goals Rule 7, Limits Rules 1 and 2.
 
 #### ***List goals***
 - `GET /goals` or `GET /goals?archived=true`

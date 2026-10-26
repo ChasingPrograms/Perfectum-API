@@ -91,6 +91,10 @@ Decisions that define how the API behaves.
   - Deleting the only sub-goal on a goal does not change whether the goal is complete. The goal then follows the no-sub-goals rule and counts as one item.
     - ***Why:*** Removing a step shouldn't silently change a goal's state, and a goal with no sub-goals already has a rule for how it is completed.
 
+#### ***Sub-goals Rule 7***
+  - Sub-goals can be included when a goal is created. The goal and its sub-goals are saved together, so either all of them are created or none are.
+    - ***Why:*** The front end lets users add sub-goals before the goal exists. Saving them in one request means a failure can never leave a goal with only some of its sub-goals.
+
 
 ## Limits and validation
 
