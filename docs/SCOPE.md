@@ -7,7 +7,7 @@ What this project includes, what it might include, and what it deliberately does
 A goal tracking REST API. V2 adds a front end. A user creates goals, breaks them into sub-goals, checks them off, and archives goals they want to pause or keep as history.
 
 - Single-user project (no accounts or login).
-- Built in about a week: 5-day target, 7-day hard deadline, as a portfolio piece.
+- Built in about two weeks, as a portfolio piece. Version 1 (the API) had a 5-day target and a 7-day hard deadline. Version 2 (the front end) gets one more week with the same targets, counted from the first day of front-end coding.
 
 **Stack:** Node.js, Express, MongoDB with Mongoose. Tested with Insomnia.
 
@@ -50,26 +50,29 @@ Version 1 is done when every item below works and is documented.
 
 Version 2 is a browser front end for the Perfectum API, in a `client` folder in the same repository. The API does not change. Version 2 is done when every item below works and is documented.
 
-**Screens**
-- Goal list (Active), with progress shown as "x out of n"
-- One goal with its sub-goals
-- Archive (Inactive list)
+**Page**
+- One page, with the Active goals list above the Inactive (archived) goals list
+- Each goal row shows its title, sub-goal count, progress as "x out of n", and the completed date if it has one
+- An empty state for new users ("Create your first goal") and for an empty Inactive list ("No archived goals")
+- Pop-ups for creating a goal, viewing a goal with its sub-goals, and confirming a delete
 
 **Actions**
-- Create, rename, and delete goals
+- Create, rename, and delete goals (rename saves on Enter or when the title loses focus)
 - Archive and unarchive goals
 - Complete and uncomplete goals and sub-goals
 - Add, edit, and delete sub-goals
+- Archived goals are view-only, apart from renaming, unarchiving, and deleting
 - Show the API's error messages to the user instead of failing silently
 
 **Design and build**
-- Layout sketched first, one sketch per screen
+- Low-fidelity wireframes first (one page, plus the pop-ups), then a high-fidelity design in Figma
 - Desktop first
+- Light theme first, with a dark theme added at the end if time allows (colours set as CSS variables)
 - Plain HTML, CSS, and JavaScript, using `fetch` to call the API (no frameworks)
 
 **Definition of done**
 - README updated with how to run the API and the front end together
-- Screenshots of the three screens in the README
+- Screenshots of the page and its pop-ups in the README
 - Pushed to GitHub with small, clearly named commits
 - Tagged `v2.0.0` on GitHub when finished
 
@@ -77,7 +80,7 @@ Version 2 is a browser front end for the Perfectum API, in a `client` folder in 
 
 ## Nice to have
 
-| Item | Reason it isn't in Version 1 |
+| Item | Reason it isn't in Version 1 or 2 |
 |---|---|
 | Deadlines on goals and sub-goals | Adds a new field and new rules (what happens when one passes) |
 | A few automated tests on the core rules | Valuable, but the API must work first |
@@ -91,7 +94,8 @@ Version 2 is a browser front end for the Perfectum API, in a `client` folder in 
 | Item | Reason |
 |---|---|
 | User accounts and login  | Needs authentication and per-user data; too large for one week |
-| Live deployment | Depends on current free hosting options; only after Version 1 works |
+| Live deployment | Depends on current free hosting options; only after Version 2 works, so the front end has a live API to use |
+| Description field on goals | Needs a new schema field and changes to the create and edit routes; would ship as API version 1.1.0 |
 | Habit tracking | Needs a new kind of data (check-ins over time), not just done/not done |
 | Gym tracking and nutrition tracking | Separate features that could plug into goals later |
 | TypeScript migration | Finish the app in plain JavaScript first, then convert |
@@ -102,7 +106,7 @@ Version 2 is a browser front end for the Perfectum API, in a `client` folder in 
 ## Not part of the API
 
 - **Show / Hide:** a screen feature. The API only returns data, and a front end decides what to display.
-- **A user interface:** this project has no front end. The front end is Version 2 and lives in its own folder.
+- **A user interface:** the API itself has no front end. The front end is Version 2 and lives in the `client` folder.
 
 ---
 
