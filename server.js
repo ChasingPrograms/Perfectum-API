@@ -8,6 +8,8 @@ const Goal = require('./models/Goal');
 const app = express();
 app.use(express.json());
 
+const MAX_SUBGOALS = 20; //Maximum sub-goals per goal (Limits Rule 1)
+
 
 //Progress Function
 const getProgress = (goal) => {
@@ -27,12 +29,30 @@ app.get('/', async (req, res) => {
 app.post('/goals',async (req, res) => {
 
   try{
-    const goal = await Goal.create({title: req.body.title, description: req.body.description ?? ''});
+    const subGoals = req.body.subGoals ?? []; //Optional list of sub-goal titles
+
+    if(!Array.isArray(subGoals)){
+      return res.status(400).json({error: 'subGoals must be a list of titles'});
+    }
+
+    if(subGoals.length > MAX_SUBGOALS){
+      return res.status(400).json({error: `The Maximum Amount of Sub-Goals is ${MAX_SUBGOALS}`});
+    }
+
+    //Goal and sub-goals are saved together, so either all are created or none are
+    const goal = await Goal.create({
+      title: req.body.title,
+      description: req.body.description ?? '',
+      subGoals: subGoals.map(title => ({title}))
+    });
     res.status(201).json(goal);
   }
 
   catch(err){
     if(err.name === 'ValidationError'){
+      if(Object.keys(err.errors).some(path => path.startsWith('subGoals'))){
+        return res.status(400).json({error: 'Invalid sub-goal title input'});
+      }
       return res.status(400).json({error: err.errors.description ? 'Invalid description input' : 'Invalid title input'});
     }
     res.status(500).json({error: 'Server Error'});
@@ -153,8 +173,8 @@ app.post('/goals/:goalId/subgoals', async (req, res) => {
       return res.status(409).json({error: 'Cannot Add Sub-Goals to Archived Goals'});
     }
 
-    if(goal.subGoals.length >= 20){
-      return res.status(409).json({error: 'The Maximum Amount of Sub-Goals is 20'});
+    if(goal.subGoals.length >= MAX_SUBGOALS){
+      return res.status(409).json({error: `The Maximum Amount of Sub-Goals is ${MAX_SUBGOALS}`});
     }
 
     if(goal.completed){
