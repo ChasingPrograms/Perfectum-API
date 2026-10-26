@@ -41,6 +41,10 @@ Decisions that define how the API behaves.
   - An Inactive goal can be deleted without unarchiving it first. Its sub-goals are deleted with it.
     - ***Why:*** A user who no longer wants an archived goal shouldn't need extra steps, and sub-goals can't exist without their goal.
 
+#### ***Goals Rule 10***
+  - A goal can have an optional description of up to 500 characters. It can be set when the goal is created and edited later on Active and Inactive goals, like the title. Sending `null` or an empty string clears it.
+    - ***Why:*** A title is short, and a description gives room for the details or reason behind a goal without making it required.
+
 
 ## Archiving
 

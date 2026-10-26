@@ -19,6 +19,7 @@ Perfectum stores one kind of document: a **Goal**. Each goal embeds a list of **
 |---|---|---|---|
 | `_id` | ObjectId | automatic | Created by MongoDB |
 | `title` | string | yes | Trimmed; cannot be empty; maximum 100 characters (Goals Rule 8) |
+| `description` | string | no | Trimmed; defaults to an empty string; maximum 500 characters (Goals Rule 10). Added in Version 2 |
 | `completed` | boolean | no | Defaults to `false` (Goals Rules 1 to 4) |
 | `completedAt` | date | no | `null` until completed; set when completed; cleared when unmarked (Goals Rule 3, Archiving Rule 4) |
 | `archived` | boolean | no | Defaults to `false`. `false` means Active, `true` means Inactive (Archiving Rules 1 to 3) |

@@ -48,7 +48,10 @@ Version 1 is done when every item below works and is documented.
 
 ## Version 2
 
-Version 2 is a browser front end for the Perfectum API, in a `client` folder in the same repository. The API does not change. Version 2 is done when every item below works and is documented.
+Version 2 is a browser front end for the Perfectum API, in a `client` folder in the same repository. The only API change is an optional goal description, which the wireframes need. Version 2 is done when every item below works and is documented.
+
+**API change**
+- Optional `description` on goals, set when creating and changed when editing (Goals Rule 10)
 
 **Page**
 - One page, with the Active goals list above the Inactive (archived) goals list
@@ -57,7 +60,7 @@ Version 2 is a browser front end for the Perfectum API, in a `client` folder in 
 - Pop-ups for creating a goal, viewing a goal with its sub-goals, and confirming a delete
 
 **Actions**
-- Create, rename, and delete goals (rename saves on Enter or when the title loses focus)
+- Create, rename, and delete goals, and add or edit a goal's description (rename saves on Enter or when the title loses focus)
 - Archive and unarchive goals
 - Complete and uncomplete goals and sub-goals
 - Add, edit, and delete sub-goals

@@ -17,7 +17,7 @@ Every action the API offers. Behavior rules live in [RULES.md](RULES.md), field 
 | `200` | Success, with a response body |
 | `201` | Created |
 | `204` | Success, no body (deleting a goal or a sub-goal) |
-| `400` | The request is malformed or breaks a validation rule (missing title, title too long, invalid ID) |
+| `400` | The request is malformed or breaks a validation rule (missing title, title or description too long, invalid ID) |
 | `404` | The goal or sub-goal does not exist |
 | `409` | The request is valid, but a rule refuses it in the goal's current state (Inactive goal, unfinished sub-goals, sub-goal limit reached, or the item is already in the state the action would put it in) |
 
@@ -35,6 +35,7 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 {
   "_id": "665f1c2e9b1d8a0012a4c111",
   "title": "Get fit by December",
+  "description": "Feel stronger and have more energy before the holidays",
   "completed": false,
   "completedAt": null,
   "archived": false,
@@ -54,11 +55,11 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 
 #### ***Create a goal***
 - `POST /goals`
-- **Body:** `{ "title": "Get fit by December" }`
-- **Does:** Creates an Active, incomplete goal with no sub-goals. Dates are set automatically.
+- **Body:** `{ "title": "Get fit by December", "description": "Feel stronger and have more energy" }`. `description` is optional.
+- **Does:** Creates an Active, incomplete goal with no sub-goals. Dates are set automatically. Without a description, `description` is an empty string.
 - **Success:** `201` with the new goal.
-- **Errors:** `400` if the title is missing, empty, or longer than 100 characters.
-- **Rules:** Goals Rule 8, Limits Rule 2.
+- **Errors:** `400` if the title is missing, empty, or longer than 100 characters, or the description is longer than 500 characters.
+- **Rules:** Goals Rules 8 and 10, Limits Rule 2.
 
 #### ***List goals***
 - `GET /goals` or `GET /goals?archived=true`
@@ -74,11 +75,11 @@ Progress is calculated on each request and never stored (Sub-goals Rules 3 and 4
 
 #### ***Rename or edit a goal***
 - `PATCH /goals/:goalId`
-- **Body:** `{ "title": "Get fit by January" }`
-- **Does:** Changes the title. Allowed on Active and Inactive goals, since Inactive goals are "read and edit only."
+- **Body:** `{ "title": "Get fit by January" }`, `{ "description": "Run a 5k by then" }`, or both. Send `"description": null` or `""` to clear the description.
+- **Does:** Changes the title, the description, or both. A field left out of the body is not changed. Allowed on Active and Inactive goals, since Inactive goals are "read and edit only."
 - **Success:** `200` with the updated goal.
-- **Errors:** `400` for a missing, empty, or too-long title, `404` if not found.
-- **Rules:** Goals Rules 5, 6 and 8.
+- **Errors:** `400` if the body has neither field, the title is empty or longer than 100 characters, or the description is longer than 500 characters. `404` if not found.
+- **Rules:** Goals Rules 5, 6, 8 and 10.
 
 #### ***Delete a goal***
 - `DELETE /goals/:goalId`

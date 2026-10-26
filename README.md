@@ -62,7 +62,7 @@ Create a goal:
 ```bash
 curl -X POST http://localhost:3000/goals \
   -H "Content-Type: application/json" \
-  -d '{"title": "Get fit by December"}'
+  -d '{"title": "Get fit by December", "description": "Feel stronger before the holidays"}'
 ```
 
 Response (``201``):
@@ -70,6 +70,7 @@ Response (``201``):
 {
   "_id": "665f1c2e9b1d8a0012a4c111",
   "title": "Get fit by December",
+  "description": "Feel stronger before the holidays",
   "completed": false,
   "completedAt": null,
   "archived": false,
@@ -96,6 +97,7 @@ Response (``201``) includes the updated goal with progress:
 {
   "_id": "665f1c2e9b1d8a0012a4c111",
   "title": "Get fit by December",
+  "description": "Feel stronger before the holidays",
   "completed": false,
   "completedAt": null,
   "archived": false,

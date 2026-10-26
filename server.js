@@ -27,13 +27,13 @@ app.get('/', async (req, res) => {
 app.post('/goals',async (req, res) => {
 
   try{
-    const goal = await Goal.create({title: req.body.title});
+    const goal = await Goal.create({title: req.body.title, description: req.body.description ?? ''});
     res.status(201).json(goal);
   }
 
   catch(err){
     if(err.name === 'ValidationError'){
-      return res.status(400).json({error: 'Invalid title input'});
+      return res.status(400).json({error: err.errors.description ? 'Invalid description input' : 'Invalid title input'});
     }
     res.status(500).json({error: 'Server Error'});
   }
@@ -77,16 +77,27 @@ app.get('/goals/:goalId', async (req, res) => {
 });
 
 //Patch Method
-app.patch('/goals/:goalId', async (req, res) => { //Updating Goal Titles
+app.patch('/goals/:goalId', async (req, res) => { //Updating Goal Titles and Descriptions
   try{
     const goal = await Goal.findById(req.params.goalId);
-    const title = req.body.title;
+    const { title, description } = req.body;
 
     if(!goal){ //If there's no such goal
       return res.status(404).json({error: 'Goal Not Found'});
     }
 
-    goal.title = title;
+    if(title === undefined && description === undefined){ //Nothing to update
+      return res.status(400).json({error: 'Provide a title or description to update'});
+    }
+
+    if(title !== undefined){
+      goal.title = title;
+    }
+
+    if(description !== undefined){
+      goal.description = description ?? ''; //null clears the description
+    }
+
     await goal.save();
     res.status(200).json({ ...goal.toObject(), progress: getProgress(goal) });
   }
@@ -97,7 +108,7 @@ app.patch('/goals/:goalId', async (req, res) => { //Updating Goal Titles
     }
 
     if(err.name === 'ValidationError'){
-      return res.status(400).json({error: 'Invalid title input'});
+      return res.status(400).json({error: err.errors.description ? 'Invalid description input' : 'Invalid title input'});
     }
 
      res.status(500).json({error: 'Server Error'});
