@@ -4,3 +4,14 @@ body{
         color: grey;
     }
 }
+
+.outercard{
+    background-color: orange;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 2rem;
+    .innercard{
+        background-color: white;
+        padding-bottom: 10px;
+    }
+}
