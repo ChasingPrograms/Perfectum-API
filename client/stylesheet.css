@@ -1,6 +1,7 @@
 body{
     background: linear-gradient(to bottom, #DFDFDF, #666666);
     min-height: 100vh;
+    margin: 0;
     font-family: 'Lato', sans-serif;
 }
 
@@ -80,6 +81,10 @@ header{
     padding: 4px;
     margin-bottom: 5px;
     gap: 10px;
+
+    .pillButton{
+        flex-shrink: 0;
+    }
 }
 
 .goalInfo{
@@ -111,6 +116,7 @@ header{
     border-radius: 50px;
     overflow: hidden;
     position: relative;
+    flex-shrink: 0;
 }
 
 .progressText{
@@ -138,6 +144,7 @@ header{
     font-style: italic;
     color: #313131;
     font-size: small;
+    white-space: nowrap;
     p{
         margin: 0;
     }
