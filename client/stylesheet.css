@@ -1,17 +1,144 @@
 body{
-    background-color: rgb(215, 219, 209);
-    h1{
-        color: grey;
+    background: linear-gradient(to bottom, #DFDFDF, #666666);
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+}
+
+header{
+    font-weight: 300;
+    text-align: center;
+    
+    #Title{
+        font-weight: 300;
+        color: #976200;
+        font-size:  50px;
+        margin-bottom: 0;
     }
+
+    p{
+        margin-top: 0;
+        font-size:  20px;
+        color: #7B7B7B;
+        font-style: italic;
+    }
+}
+.tabHeader{
+    color:white;
+    margin: 0;
+    padding: 8px 24px;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.emptyStatep{
+    font-style: italic;
+    font-weight: 300;
+    font-size: xx-large;
+    color:#949494;
 }
 
 .outercard{
-    background-color: orange;
+    background-color: #E98F50;
     border-radius: 25px;
     overflow: hidden;
     margin: 2rem;
     .innercard{
         background-color: white;
-        padding-bottom: 10px;
+        text-align: center;
+        padding: 30px;
+    }
+}
+
+.pillButton{
+    border: none;
+    background-color: #E98F50;
+    color: whitesmoke;
+    border-radius: 1000px;
+    font-family: inherit;
+    font-weight: 400;
+    padding: 4px 16px;
+}
+
+.addNewGoalButton{
+    padding: 10px 40px;
+    font-size: 16px;
+}
+
+.goalList{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.goalRow{
+    display: flex;
+    align-items: center;
+    background-color: #C2C2C2;
+    border-left: 12px solid #AD4800;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 4px;
+    margin-bottom: 5px;
+    gap: 10px;
+}
+
+.goalInfo{
+    margin-right: auto;
+
+    .subCount, h3{
+        text-align: left;
+        margin: 0;
+    }
+    h3{
+        color: #976200;
+        font-weight: 400;
+        font-size:  20px;
+        font-style: italic;
+    }
+    .subCount{
+        font-weight: 300;
+        font-style: italic;
+        color:#949494;
+    }
+    
+}
+
+.progressTrack{
+    width: 40%;
+    height: 24px;
+    color: #FFFFFF;
+    background-color: #12121294;
+    border-radius: 50px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progressText{
+    position: absolute;
+    inset: 0;
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    line-height: 24px;
+    font-size: 14px;
+}
+
+.progressFill{
+    height: 100%;
+    width: 50%;
+    background-color: #175700;
+}
+
+.complete{
+    width: 100%;
+}
+
+.completedDate {
+    font-weight: 300;
+    font-style: italic;
+    color: #313131;
+    font-size: small;
+    p{
+        margin: 0;
     }
 }

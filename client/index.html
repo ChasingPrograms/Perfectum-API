@@ -4,35 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Perfectum </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
     <header>
-        <h1> Perfectum </h1>
+        <h1 id="Title"> PERFECTUM </h1>
         <p> Making your goals simpler </p>
     </header>
     
     <main>
         <!-- YOUR GOALS TAB -->
         <section class = "outercard">
-            <h2> Your Goals </h2>
+            <h2 class ="tabHeader"> Your Goals </h2>
             <div class ="innercard">
-                <p> Create Your First Goal </p>
-                <ul>
+                <!--<p class="emptyStatep"> Create Your First Goal </p>-->
+                <ul class = "goalList">
+                    <li class = "goalRow"> 
+                        <div class = "goalInfo"> 
+                            <h3> Getting fit by December </h3>
+                            <p class = "subCount"> 10 Subgoals</p>
+                        </div>
+                        <div class="progressTrack">
+                            <div class="progressFill">
 
+                            </div>
+                            <span class="progressText"> 5 out of 10 subgoals completed</span>
+                        </div>
+                        <button class="pillButton" aria-label="Open goal"> >>> </button>
+                    </li>
+                    <li class = "goalRow"> 
+                        <div class = "goalInfo"> 
+                            <h3> Goal </h3>
+                            <p class = "subCount"> 10 Subgoals</p>
+                        </div>
+                        <div class="progressTrack">
+                            <div class="progressFill"></div>
+                            <span class="progressText"> 5 out of 10 subgoals completed</span>
+                        </div>
+                        <button class="pillButton" aria-label="Open goal"> >>> </button>
+                    </li>
                 </ul>
-                <button> Add New Goal </button>            
+                <button class = "pillButton addNewGoalButton"> Add New Goal </button>            
             </div>
         </section>
 
 
         <!-- INACTIVE GOALS TAB -->
         <section class = "outercard">
-            <h2> Inactive Goals </h2>
+            <h2 class ="tabHeader"> Inactive Goals </h2>
             <div class="innercard">
-                <p> No Archived Goals </p>
-                <ul>
-
+                <!--<p class="emptyStatep"> No Archived Goals </p>-->
+                <ul class = "goalList">
+                    <li class = "goalRow"> 
+                        <div class = "goalInfo"> 
+                            <h3> Getting fit by December </h3>
+                            <p class = "subCount"> 10 Subgoals</p>
+                        </div>
+                        <div class ="completedDate">
+                            <p> Completed: </p>
+                            <time datetime="2026-11-11T00:00"> 11-11-26, 00:00 </time>
+                        </div>
+                        <div class="progressTrack">
+                            <div class="progressFill complete"></div>
+                            <span class="progressText"> 10 out of 10 subgoals completed</span>
+                        </div>
+                        <button class="pillButton" aria-label="Open goal"> >>> </button>
+                    </li>
                 </ul>
             </div>
         </section>
