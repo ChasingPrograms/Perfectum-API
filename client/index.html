@@ -6,8 +6,9 @@
     <title> Perfectum </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
+    <script src="app.js" defer></script>
 </head>
 <body>
     <header>
@@ -21,7 +22,7 @@
             <h2 class ="tabHeader"> Your Goals </h2>
             <div class ="innercard">
                 <!--<p class="emptyStatep"> Create Your First Goal </p>-->
-                <ul class = "goalList">
+                <ul id ="activeList" class = "goalList">
                     <li class = "goalRow"> 
                         <div class = "goalInfo"> 
                             <h3> Getting fit by December </h3>
@@ -57,7 +58,7 @@
             <h2 class ="tabHeader"> Inactive Goals </h2>
             <div class="innercard">
                 <!--<p class="emptyStatep"> No Archived Goals </p>-->
-                <ul class = "goalList">
+                <ul id ="inactiveList" class = "goalList">
                     <li class = "goalRow"> 
                         <div class = "goalInfo"> 
                             <h3> Getting fit by December </h3>
