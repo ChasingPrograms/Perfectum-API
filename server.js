@@ -7,6 +7,7 @@ const Goal = require('./models/Goal');
 
 const app = express();
 app.use(express.json());
+app.use(express.static('client'));
 
 const MAX_SUBGOALS = 20; //Maximum sub-goals per goal (Limits Rule 1)
 
@@ -17,11 +18,6 @@ const getProgress = (goal) => {
   const count = goal.subGoals.filter(sub => sub.completed).length;
   return{completed: count,total}
 };
-
-app.get('/', async (req, res) => {
-  res.json({ message: 'Perfectum API is running' });
-});
-
 
 // == Goal CRUD ==
 
