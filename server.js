@@ -14,6 +14,9 @@ const MAX_SUBGOALS = 20; //Maximum sub-goals per goal (Limits Rule 1)
 
 //Progress Function
 const getProgress = (goal) => {
+  if(goal.subGoals.length === 0){ //A goal with no sub-goals counts as one item (Sub-goals Rule 4)
+    return{completed: goal.completed ? 1 : 0, total: 1}
+  }
   const total = goal.subGoals.length;
   const count = goal.subGoals.filter(sub => sub.completed).length;
   return{completed: count,total}
