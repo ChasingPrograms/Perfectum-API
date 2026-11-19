@@ -32,8 +32,26 @@ async function loadGoals(archived){
         progressText.classList.add("progressText"); 
         progressText.textContent =  `${goal.progress.completed} out of ${goal.progress.total} subgoals completed`;
         track.append(fill,progressText);
-        liElement.append(track);
-        
+       
+
+        //Completed Goal
+        if(goal.completedAt){
+            const comDate = document.createElement("div");
+            comDate.classList.add("completedDate");
+
+            const comTime = document.createElement("time");
+            comTime.setAttribute("datetime", goal.completedAt);
+            const dateObj = new Date(goal.completedAt);
+            const options = { day: "numeric", month: "short", year: "numeric" };
+            comTime.textContent = dateObj.toLocaleDateString(undefined, options);
+            comDate.append("Completed: ", comTime);
+            liElement.append(comDate);
+
+            //Complete Class
+            fill.classList.add("complete");
+        }
+
+        liElement.append(track); // Appending Track
         list.append(liElement);
 
     }
