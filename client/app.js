@@ -52,6 +52,14 @@ async function loadGoals(archived){
         }
 
         liElement.append(track); // Appending Track
+
+         //Goal Button
+        const goalButton = document.createElement("button");
+        goalButton.classList.add("pillButton");
+        goalButton.setAttribute('aria-label','Open Goal');
+        goalButton.textContent = ">>>";
+        
+        liElement.append(goalButton);
         list.append(liElement);
 
     }
