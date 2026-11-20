@@ -71,6 +71,8 @@ header{
     margin: 0;
     max-height: 168px;
     overflow: auto;
+    scrollbar-color: #f88a3c #e7e3e3;
+    scrollbar-width: thin;
 }
 
 .goalRow{
