@@ -2,7 +2,7 @@ async function loadGoals(archived){
     const response = await fetch(`/goals?archived=${archived}`);
     const goals = await response.json();
     const list = archived ? document.getElementById("inactiveList") : document.getElementById("activeList");
-    list.replaceChildren();
+       list.replaceChildren();
     for(const goal of goals){
         //GoalList
         const liElement =  document.createElement("li");
@@ -61,8 +61,12 @@ async function loadGoals(archived){
         
         liElement.append(goalButton);
         list.append(liElement);
-
     }
+    
+    // Message if Goals / Archived Goals are empty:
+    const emptyState =  archived ? document.getElementById("emptyInactive") : document.getElementById("emptyActive");
+    emptyState.hidden = goals.length >=1; 
+
 }
 loadGoals(false);
 loadGoals(true);
