@@ -139,6 +139,11 @@ header{
     background-color: #175700;
 }
 
+.notStarted{
+    min-width: 12px;
+    background-color: #570000;
+}
+
 .complete{
     width: 100%;
 }

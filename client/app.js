@@ -27,6 +27,11 @@ async function loadGoals(archived){
         //Percentage
         const percentage = (goal.progress.completed / goal.progress.total) * 100;
         fill.style.width = `${percentage}%`;
+
+        if(goal.progress.completed === 0){ //Not Started Value
+            fill.classList.add("notStarted");
+        }
+
         //Text Element
         const progressText = document.createElement("span");
         progressText.classList.add("progressText"); 
