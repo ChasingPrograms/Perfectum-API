@@ -75,3 +75,17 @@ async function loadGoals(archived){
 }
 loadGoals(false);
 loadGoals(true);
+
+
+//Add New Goal Popup
+const openNewGoalButton = document.getElementById("addNewGoal")
+const closeNewGoalButton = document.getElementById("closeNewGoalModal")
+const newGoalModal = document.getElementById("openNewGoalModal")
+
+openNewGoalButton.addEventListener("click",() => {
+    newGoalModal.showModal();
+})
+
+closeNewGoalButton.addEventListener("click",() => {
+    newGoalModal.close();
+})

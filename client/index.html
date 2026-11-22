@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stylesheet.css">
-    <script src="app.js" defer></script>
+    <script src="app.js" defer> </script>
 </head>
 <body>
     <header>
@@ -23,7 +23,7 @@
             <div class ="innercard">
                 <p id = "emptyActive" class ="emptyStatep"> Create Your First Goal </p>
                 <ul id ="activeList" class = "goalList"></ul>
-                <button class = "pillButton addNewGoalButton"> Add New Goal </button>            
+                <button class = "pillButton addNewGoalButton" id = "addNewGoal"> Add New Goal </button>            
             </div>
         </section>
 
@@ -37,6 +37,11 @@
             </div>
         </section>
     </main>
+
+    <dialog id="openNewGoalModal"> 
+        <h2> New Goal</h2>
+        <button id="closeNewGoalModal" class="closeButton" aria-label="Close"> x </button>
+    </dialog>
     
 </body>
 </html>
