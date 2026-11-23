@@ -189,6 +189,45 @@ header{
         background-color: #0000004f;
         backdrop-filter: blur(2px);
     }
+
+    #newGoalForm{
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        label{
+            color: white;
+            i{
+                font-size: small;
+            }
+        }
+        .counter{
+            margin-top: 0;
+            color: white;
+            font-size: small;
+            text-align: right;
+            &.textLimit{
+                color: rgb(255, 0, 0);
+            }
+        }
+        input, textarea{
+            background-color: #0000005e;
+            border: 1px solid white;
+            border-radius: 6px;
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            padding: 10px 12px;
+            &::placeholder{
+                color: #E8C9B0;
+                font-style: italic;
+                font-weight: 300;
+            }
+        }
+        textarea{
+            resize: none;
+            height: 120px;
+        }
+    }
 }
 
 .closeButton{

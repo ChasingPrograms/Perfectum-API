@@ -89,3 +89,20 @@ openNewGoalButton.addEventListener("click",() => {
 closeNewGoalButton.addEventListener("click",() => {
     newGoalModal.close();
 })
+
+//Text Counter (New Goal Popup)
+//Title
+const titleField = document.getElementById("goalTitle");
+const titleCount = document.getElementById("titleCounter");
+titleField.addEventListener("input",() =>{
+     titleCount.textContent = `(${titleField.value.length}/100)`;
+     titleCount.classList.toggle("textLimit", titleField.value.length === 100);
+})
+
+//Description
+const descField = document.getElementById("goalDescription");
+const descCount = document.getElementById("descCounter");
+descField.addEventListener("input",() =>{
+     descCount.textContent = `(${descField.value.length}/500)`;
+     descCount.classList.toggle("textLimit", descField.value.length === 500);
+})

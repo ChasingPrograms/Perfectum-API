@@ -25,12 +25,12 @@ Tick an item when it works in the browser against the real database and is commi
 ## Now: new-goal pop-up
 
 - [x] **35** Style the pop-up from the design: glass panel, `::backdrop` blur
-- [ ] **36** Form fields: title and description, with character counters that turn red at the limit
+- [x] **36** Form fields: title and description, with character counters that turn red at the limit
 - [ ] **37** Sub-goals card: add sub-goals inline (empty title on blur removes the row; trim before checking), with its own scroll bar
 - [ ] **38** Save: `POST /goals` with `subGoals`, close the pop-up, reload the Active list
 - [ ] **39** Show the API's error message in the pop-up when saving fails (for example, a missing title)
 
-Open question: the description limit is 500 in the API, but the wireframe shows "(100)". Decide before task 36.
+Decided: the description limit stays 500, matching the API.
 
 ## Next: goal pop-up
 

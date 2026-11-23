@@ -44,6 +44,14 @@
             <h1> Create A New Goal </h1>
             <button id="closeNewGoalModal" class="closeButton" aria-label="Close">✕</button>
         </div>
+        <form id="newGoalForm"> 
+                <label for="goalTitle"> <b>Title</b> <i> (required) </i></label>
+                <input type="text" id="goalTitle" name="goalTitle" required maxlength="100" placeholder="Create a title for your goal!">
+                <p id="titleCounter" class="counter">(0/100)</p>
+                <label for="goalDescription"> <b>Description</b> <i>(optional)</i></label>
+                <textarea id="goalDescription" name="goalDescription" maxlength="500" placeholder="Describe your goal!"></textarea>
+                <p id="descCounter" class="counter">(0/500)</p>
+            </form>
     </dialog>
     
 </body>
