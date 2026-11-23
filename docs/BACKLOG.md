@@ -24,7 +24,7 @@ Tick an item when it works in the browser against the real database and is commi
 
 ## Now: new-goal pop-up
 
-- [ ] **35** Style the pop-up from the design: glass panel, `::backdrop` blur
+- [x] **35** Style the pop-up from the design: glass panel, `::backdrop` blur
 - [ ] **36** Form fields: title and description, with character counters that turn red at the limit
 - [ ] **37** Sub-goals card: add sub-goals inline (empty title on blur removes the row; trim before checking), with its own scroll bar
 - [ ] **38** Save: `POST /goals` with `subGoals`, close the pop-up, reload the Active list
@@ -71,6 +71,7 @@ Found while building. None of them blocks Version 2.
 - [ ] A goal with no sub-goals reads "0 Subgoals" but "0 out of 1 subgoals completed"
 - [ ] The `complete` bar colour barely differs from a normal fill
 - [ ] Round the right edge of the red cap to match the design
+- [ ] Re-check the new-goal pop-up's top and bottom spacing once the fields are in (10px top vs about 48px bottom now)
 - [ ] Consistent quotes and spacing in app.js and index.html (`id="..."`, `>= 1`, missing `;`)
 
 ## If time allows

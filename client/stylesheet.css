@@ -158,3 +158,46 @@ header{
         margin: 0;
     }
 }
+
+/* Modal Styling */
+
+#openNewGoalModal {
+    
+    background: linear-gradient(rgba(201, 90, 0, 0.8), rgba(128, 57, 0, 0.9));
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 600px;
+    border-radius: 10px;
+    padding:10px 32px 32px;
+
+    h1{
+        font-family: 'Lato', sans-serif;
+        color:whitesmoke;
+        font-weight: 300;
+        margin: 0;
+    }
+
+    .modalHeader{
+        text-align: center;
+        display:grid;
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    &::backdrop {
+        background-color: #0000004f;
+        backdrop-filter: blur(2px);
+    }
+}
+
+.closeButton{
+    background-color: #ffffff46;
+    border-radius: 50%;
+    color: whitesmoke;
+    height:44px;
+    width:44px;
+    border: none;
+    font-size: large;
+    font-family: 'Lato', sans-serif;
+}
